@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Tableau de Bord</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Mon Tableau de Bord</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Accueil</a></li>
+                <li><a href="{{ url_for('logout') }}">Déconnexion</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Mes Réservations</h2>
+
+        {% if reservations %}
+            <ul>
+                {% for reservation in reservations %}
+                    <li>
+                        <h3>{{ reservation['titre'] }}</h3>
+                        <p><strong>Date du spectacle :</strong> {{ reservation['date_spectacle'] }}</p>
+                        <p><strong>Places réservées :</strong> {{ reservation['places_reservees'] }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Vous n'avez pas encore effectué de réservation.</p>
+        {% endif %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Réservation de Spectacles. Tous droits réservés.</p>
+    </footer>
+</body>
+</html>

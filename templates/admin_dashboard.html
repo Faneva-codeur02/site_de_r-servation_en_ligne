@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Tableau de Bord Administrateur</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Accueil</a></li>
+                <li><a href="{{ url_for('add_spectacle') }}">Ajouter un Spectacle</a></li>
+                <li><a href="{{ url_for('logout') }}">Déconnexion</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Liste des Spectacles avec Réservations</h2>
+
+        {% if spectacles %}
+            <ul>
+                {% for spectacle in spectacles %}
+                    <li>
+                        <h3>{{ spectacle['titre'] }}</h3>
+                        <p><strong>Date :</strong> {{ spectacle['date_spectacle'] }}</p>
+                        <p>{{ spectacle['description'] }}</p>
+                        <p><strong>Nombre de Réservations :</strong> {{ spectacle['nombre_reservations'] }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Aucun spectacle disponible pour le moment.</p>
+        {% endif %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Réservation de Spectacles. Tous droits réservés.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réservation de Spectacles</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Bienvenue sur notre site de réservation de spectacles</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Accueil</a></li>
+                {% if session.get('loggedin') %}
+                    {% if session.get('role') == 'admin' %}
+                    <li><a href="{{ url_for('admin_dashboard') }}">Tableau de bord</a></li>
+                    <li><a href="{{ url_for('add_spectacle') }}">Ajouter un Spectacle</a></li>
+                    {% elif session.get('role') == 'client' %}
+                    <li><a href="{{ url_for('dashboard') }}">Mon Compte</a></li>
+                    {% endif %}
+                    <li><a href="{{ url_for('logout') }}">Déconnexion</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">Connexion</a></li>
+                    <li><a href="{{ url_for('register') }}">S'enregistrer</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Liste des Spectacles</h2>
+
+        {% if spectacles %}
+            <ul>
+                {% for spectacle in spectacles %}
+                    <li>
+                        <h3>{{ spectacle['titre'] }}</h3>
+                        <p><strong>Date :</strong> {{ spectacle['date_spectacle'] }}</p>
+                        <p>{{ spectacle['description'] }}</p>
+                        {% if session.get('loggedin') and session.get('role') == 'client' %}
+                            <form action="{{ url_for('reserve', spectacle_id=spectacle['id']) }}" method="POST">
+                                <label for="places">Nombre de places :</label>
+                                <input type="number" name="places" min="1" required>
+                                <button type="submit">Réserver</button>
+                            </form>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Aucun spectacle disponible pour le moment.</p>
+        {% endif %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Réservation de Spectacles. Tous droits réservés.</p>
+    </footer>
+</body>
+</html>

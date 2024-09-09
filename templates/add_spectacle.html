@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter un spectacle</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Ajouter un nouveau spectacle</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Accueil</a></li>
+                <li><a href="{{ url_for('dashboard') }}">Mon Compte</a></li>
+                <li><a href="{{ url_for('logout') }}">Déconnexion</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Formulaire d'ajout de spectacle</h2>
+
+        <form action="{{ url_for('add_spectacle') }}" method="POST">
+            <label for="titre">Titre du spectacle :</label>
+            <input type="text" id="titre" name="titre" required>
+
+            <label for="date_spectacle">Date du spectacle :</label>
+            <input type="date" id="date_spectacle" name="date_spectacle" required>
+
+            <label for="description">Description :</label>
+            <textarea id="description" name="description" required></textarea>
+
+            <button type="submit">Ajouter le spectacle</button>
+        </form>
+
+        {% if message %}
+            <p style="color:red;">{{ message }}</p>
+        {% endif %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Réservation de Spectacles. Tous droits réservés.</p>
+    </footer>
+</body>
+</html>
